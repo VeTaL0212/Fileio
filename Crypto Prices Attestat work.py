@@ -105,14 +105,14 @@ window = Tk()
 window.title("Курсы обмена криптовалют")
 window.geometry("360x300")
 
-Label(text="Базовая валюта").pack(padx=10, pady=10)
+Label(text="Выберите код валюты").pack(padx=10, pady=10)
 currency_combobox = ttk.Combobox(values=list(currency.keys())) # Combobox  виджет в tkinter используется для создания выпадающего списка
 currency_combobox.pack(padx=10, pady=10)
 currency_combobox.bind("<<ComboboxSelected>>", update_currency_label) # bind()  метод tkinter используется для привязки события к виджету
 currency_label = ttk.Label()
 currency_label.pack(padx=10, pady=10) # метод `pack()` в tkinter размещает виджеты в окне
 
-Label(text="Криптовалюта").pack(padx=10, pady=10)
+Label(text="Выберите код криптовалюты").pack(padx=10, pady=10)
 
 cript_combobox = ttk.Combobox(values=list(cript.keys()))
 cript_combobox.pack(padx=10, pady=10)
