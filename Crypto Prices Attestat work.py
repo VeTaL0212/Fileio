@@ -11,10 +11,16 @@ def update_cript_label(event):
     cript_label.config(text=name)
 
 
-def update_currency_label(event):
-    code = currency_combobox.get()
+def update_currency1_label(event):
+    code = currency1_combobox.get()
     name = currency[code]
-    currency_label.config(text=name)
+    currency1_label.config(text=name)
+
+
+def update_currency2_label(event):
+    code = currency2_combobox.get()
+    name = currency[code]
+    currency2_label.config(text=name)
 
 
 def exchange():
@@ -103,17 +109,23 @@ cript = {
 
 window = Tk()
 window.title("Курсы обмена криптовалют")
-window.geometry("360x350")
+window.geometry("360x500")
 
-Label(text="Выберите код валюты").pack(padx=10, pady=10)
-currency_combobox = ttk.Combobox(values=list(currency.keys())) # Combobox  виджет в tkinter используется для создания выпадающего списка
-currency_combobox.pack(padx=10, pady=10)
-currency_combobox.bind("<<ComboboxSelected>>", update_currency_label) # bind()  метод tkinter используется для привязки события к виджету
-currency_label = ttk.Label()
-currency_label.pack(padx=10, pady=10) # метод `pack()` в tkinter размещает виджеты в окне
+Label(text="Выберите код первой валюты").pack(padx=10, pady=10)
+currency1_combobox = ttk.Combobox(values=list(currency.keys())) # Combobox  виджет в tkinter используется для создания выпадающего списка
+currency1_combobox.pack(padx=10, pady=10)
+currency1_combobox.bind("<<ComboboxSelected>>", update_currency1_label) # bind()  метод tkinter используется для привязки события к виджету
+currency1_label = ttk.Label()
+currency1_label.pack(padx=10, pady=10) # метод `pack()` в tkinter размещает виджеты в окне
+
+Label(text="Выберите код второй валюты").pack(padx=10, pady=10)
+currency2_combobox = ttk.Combobox(values=list(currency.keys()))
+currency2_combobox.pack(padx=10, pady=10)
+currency2_combobox.bind("<<ComboboxSelected>>", update_currency2_label)
+currency2_label = ttk.Label()
+currency2_label.pack(padx=10, pady=10)
 
 Label(text="Выберите код криптовалюты").pack(padx=10, pady=10)
-
 cript_combobox = ttk.Combobox(values=list(cript.keys()))
 cript_combobox.pack(padx=10, pady=10)
 cript_combobox.bind("<<ComboboxSelected>>", update_cript_label)
