@@ -3,7 +3,7 @@ from tkinter import filedialog as fd
 from tkinter import ttk
 import requests
 from tkinter import messagebox as mb
-import pyperclip
+import pyperclip # модуль Python позволяет копировать текст в буфер обмена
 import json
 import os
 
@@ -18,19 +18,19 @@ def save_history(file_path, link):
             history = json.load(f)
     history.append({'file_path': os.path.basename(file_path), "download_link": link})
     with open(history_file, 'w') as f:
-        json.dump(history, f, indent=4)
+        json.dump(history, f, indent=4) # json.dump(data, file)`  сохранить данные в формате JSON в файл
 
 
 def upload():
     try:
-        filepath = fd.askopenfilename()
+        filepath = fd.askopenfilename() # filedialog.askopenfilename()` открыть диалог выбора файла
         if filepath:
             with open(filepath, 'rb') as f:
                 files = {'file': f}
-                response = requests.post('https://file.io', files=files)
+                response = requests.post('https://file.io', files=files) #  POST - этот HTTP метод используется для отправки файла на сервер
                 response.raise_for_status()
                 link = response.json()['link']
-                entry.delete(0, END)
+                entry.delete(0, END) # entry.delete(0, END) очистить Entry виджет
                 entry.insert(0, link)
                 pyperclip.copy(link)
                 save_history(filepath, link)
@@ -45,19 +45,19 @@ def show_history():
         mb.showinfo("История", "История загрузок пуста")
         return
 
-    history_window = Toplevel(window)
+    history_window = Toplevel(window) # Toplevel(window) создать дочернее окно
     history_window.title("История загрузок")
 
     files_listbox = Listbox(history_window, width=50, height=20)
-    files_listbox.grid(row=0, column=0, padx=(10, 0), pady=10)
+    files_listbox.grid(row=0, column=0, padx=(10, 0), pady=10) # widget.grid(row=1, column=2) в Tkinter использовать Grid для расположения виджетов
 
     links_listbox = Listbox(history_window, width=50, height=20)
     links_listbox.grid(row=0, column=1, padx=(0, 10), pady=10)
 
     with open(history_file, 'r') as f:
-        history = json.load(f)
+        history = json.load(f) # `json.load(file)` метод используется для чтения JSON данных из файла
         for item in history:
-            files_listbox.insert(END, item['file_path'])
+            files_listbox.insert(END, item['file_path']) # listbox.insert(END, item)` добавить элементы в Listbox в Tkinter
             links_listbox.insert(END, item['download_link'])
 
 window = Tk()
