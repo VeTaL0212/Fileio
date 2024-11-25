@@ -18,20 +18,21 @@ def update_currency_label(event):
 
 
 def exchange():
-    cript_code = cript_combobox.get().lower()
+    cript_code = cript_combobox.get()
+    cript_name = cript[cript_code].lower()
     currency_code = currency_combobox.get().lower()
 
     if cript_code and currency_code:
         try:
-            response = requests.get(f"https://api.coingecko.com/api/v3/simple/price?ids={cript_code}&vs_currencies={currency_code}") # Для получения данных с сервера используется метод `get` библиотеки requests
+            response = requests.get(f"https://api.coingecko.com/api/v3/simple/price?ids={cript_name}&vs_currencies={currency_code}") # Для получения данных с сервера используется метод `get` библиотеки requests
             response.raise_for_status() # метод `raise_for_status()` в библиотеке requests  Устанавливает статус-код ответа
             data = response.json() # раскладываем в виде обычного python словаря
 
-            if cript_code in data:
-                exchange_rate = data[cript_code][currency_code]
-                cript_name = cript[cript_code]
-                currency_name = currency[currency_code]
-                mb.showinfo("Курс обмена", f"Курс: {exchange_rate:.2f} {currency_name} за один {cript_name}")
+            if cript_name in data:
+                exchange_rate = data[cript_name][currency_code]
+                cript_name = cript_name.capitalize()
+                currency_name = currency[currency_code.upper()]
+                mb.showinfo("Курс обмена", f"Курс: {exchange_rate:.0f} {currency_name} за один {cript_name}")
             else:
                 mb.showerror("Ошибка", f"Валюта {cript_code} не найдена!")
         except Exception as e:
@@ -41,23 +42,64 @@ def exchange():
 
 
 currency ={
-    'rub': "Российский рубль",
-    'EUR': "Евро",
-    'GBP': "Британский фунт стерлингов",
-    'JPY': "Японская йена",
-    'CNY': "Китайский юань",
-    'KZT': "Казахский тенге",
-    'UZS': "Узбекская сум",
-    'CHF': "Швейцарский франк",
-    'AED': "Дирхам ОАЭ",
-    'CAD': "Канадский доллар",
-    'USD': "Американский доллар"
+    'USD':'Американский доллар',
+    'EUR':'Евро',
+    'RUB':'Российский рубль',
+    'JPY':'Японская йена',
+    'GBP':'Фунт стерлингов',
+    'AUD':'Австралийский доллар',
+    'ARS':'Аргентийский песо',
+    'AED':'Дирхам (ОАЭ)',
+    'BDT':'Бангладешская така',
+    'BHD':'Динар (Бахрейн)',
+    'BMD':'Бермудский доллар',
+    'BRL':'Бразильский реал',
+    'CAD':'Канадский доллар',
+    'CHF':'Швейцарский франк',
+    'CLP':'Чилийское песо',
+    'CNY':'Китайский юань',
+    'CZK':'Чешская крона',
+    'DKK':'Датская крона',
+    'GEL':'Грузинский лари',
+    'HKD':'Гонконгский доллар',
+    'HUF':'Форинт (Венгрия)',
+    'IDR':'Рупия (Индонезия)',
+    'ILS':'Новый израильский шекель',
+    'INR':'Индийская рупия',
+    'KRW':'Вон (Южная Корея)',
+    'KWD':'Кувейтский динар',
+    'LKR':'Рупия (Шри-Ланка)',
+    'MMK':'Кьят (Мьянма)',
+    'MXN':'Мексиканский песо',
+    'MYR':'Малайзийский рингит',
+    'NGN':'Нигерийская найра',
+    'NOK':'Норвежская крона',
+    'NZD':'Новозеландский доллар',
+    'PHP':'Филиппинский песо',
+    'PKR':'Пакистанская рупия',
+    'PLN':'Слотый (Польша)',
+    'SAR':'Риял (Сайдовская Аравия)',
+    'SEK':'Шведская крона',
+    'SGD':'Сингапурский доллар',
+    'THB':'Бат (Таиланд)',
+    'TRY':'Турецкая лира',
+    'TWD':'Новый тайваньский доллар',
+    'UAH':'Гривна',
+    'VEF':'Венесуэльский боливар',
+    'VND':'Вьетнамский донг',
+    'ZAR':'Южноафриканский рэнд'
 }
 
 cript = {
-    "bitcoin": 'BTC',
-    "litecoin": 'LTC'
-}
+    'BTC':'Bitcoin',
+    'ETH':'Ethereum',
+    'DOGE':'Dogecoin',
+    'LTC':'Litecoin',
+    'XLM':'Stellar',
+    'SOL':'Solana',
+    'XRP':'Ripple',
+    'ADA':'Cardano',
+    }
 
 window = Tk()
 window.title("Курсы обмена криптовалют")
