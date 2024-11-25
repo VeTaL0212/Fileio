@@ -32,7 +32,7 @@ def exchange():
                 exchange_rate = data[cript_name][currency_code]
                 cript_name = cript_name.capitalize()
                 currency_name = currency[currency_code.upper()]
-                mb.showinfo("Курс обмена", f"Курс: {exchange_rate:.0f} {currency_name} за один {cript_name}")
+                exchange_label.config(text=f"Текущий курс:\n {exchange_rate:.0f} {currency_name} за один {cript_name}")
             else:
                 mb.showerror("Ошибка", f"Валюта {cript_code} не найдена!")
         except Exception as e:
@@ -103,7 +103,7 @@ cript = {
 
 window = Tk()
 window.title("Курсы обмена криптовалют")
-window.geometry("360x300")
+window.geometry("360x350")
 
 Label(text="Выберите код валюты").pack(padx=10, pady=10)
 currency_combobox = ttk.Combobox(values=list(currency.keys())) # Combobox  виджет в tkinter используется для создания выпадающего списка
@@ -120,6 +120,9 @@ cript_combobox.bind("<<ComboboxSelected>>", update_cript_label)
 
 cript_label = ttk.Label()
 cript_label.pack(padx=10, pady=10)
+
+exchange_label = Label()
+exchange_label.pack(padx=10, pady=10)
 
 Button(text="Получить курс обмена", command=exchange).pack(padx=10, pady=10)
 
