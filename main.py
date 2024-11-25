@@ -41,7 +41,7 @@ def upload():
 
 
 def show_history():
-    if not os.path.exists(history_file)
+    if not os.path.exists(history_file):
         mb.showinfo("История", "История загрузок пуста")
         return
 
