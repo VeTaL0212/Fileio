@@ -26,19 +26,22 @@ def update_currency2_label(event):
 def exchange():
     cript_code = cript_combobox.get()
     cript_name = cript[cript_code].lower()
-    currency_code = currency_combobox.get().lower()
+    currency1_code = currency1_combobox.get().lower()
+    currency2_code = currency2_combobox.get().lower()
 
-    if cript_code and currency_code:
+    if cript_code and currency1_code and currency2_code:
         try:
-            response = requests.get(f"https://api.coingecko.com/api/v3/simple/price?ids={cript_name}&vs_currencies={currency_code}") # Для получения данных с сервера используется метод `get` библиотеки requests
+            response = requests.get(f"https://api.coingecko.com/api/v3/simple/price?ids={cript_name}&vs_currencies={currency1_code},{currency2_code}") # Для получения данных с сервера используется метод `get` библиотеки requests
             response.raise_for_status() # метод `raise_for_status()` в библиотеке requests  Устанавливает статус-код ответа
             data = response.json() # раскладываем в виде обычного python словаря
 
             if cript_name in data:
-                exchange_rate = data[cript_name][currency_code]
+                exchange1_rate = data[cript_name][currency1_code]
+                exchange2_rate = data[cript_name][currency2_code]
                 cript_name = cript_name.capitalize()
-                currency_name = currency[currency_code.upper()]
-                exchange_label.config(text=f"Текущий курс:\n {exchange_rate:.0f} {currency_name} за один {cript_name}")
+                currency1_name = currency[currency1_code.upper()]
+                currency2_name = currency[currency2_code.upper()]
+                exchange_label.config(text=f"Текущий курс:\n {exchange1_rate:.1f} {currency1_name} за один {cript_name}\n{exchange2_rate:.1f} {currency2_name} за один {cript_name}")
             else:
                 mb.showerror("Ошибка", f"Валюта {cript_code} не найдена!")
         except Exception as e:
