@@ -1,5 +1,5 @@
 import requests
-import  json
+import json
 from tkinter import *
 from tkinter import messagebox as mb
 from tkinter import ttk
@@ -111,7 +111,7 @@ cript = {
     }
 
 window = Tk()
-window.title("Курсы обмена криптовалют")
+window.title("Курсы криптовалют")
 window.geometry("360x500")
 
 Label(text="Выберите код первой валюты").pack(padx=10, pady=10)
@@ -142,10 +142,3 @@ exchange_label.pack(padx=10, pady=10)
 Button(text="Получить курс обмена", command=exchange).pack(padx=10, pady=10)
 
 window.mainloop()
-
-
-
-# result = requests.get('https://open.er-api.com/v6/latest/USD')
-# data = json.loads(result.text)
-# p = pprint.PrettyPrinter(indent=4)
-# p.pprint(data)
